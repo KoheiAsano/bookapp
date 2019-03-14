@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 const books = ["ゼロから作るDeep_Lerning", "PRML","やさしいJAVA", "アナログ電子回路の基礎", "Linux_Bible" ];
 
+
+
 class MyPage extends Component {
   render() {
     return (
@@ -32,7 +34,7 @@ class BookLink extends Component {
   render() {
     return (
       <div>
-        <p><button onClick={() => console.log("Clicked" + this.props.bookName)}> {this.props.bookName} </button></p>
+        <p><button onClick={() => alert('clicked')}> {this.props.bookName} <br/>[著者]<br/>[本の画像がここに表示される]</button></p>
       </div>
     );
   }
