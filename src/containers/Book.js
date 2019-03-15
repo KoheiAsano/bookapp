@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import {fetchBookComments, fetchAllBooks} from '../actions';
+import {fetchBookComments, fetchAllBooks, fetchOneBook} from '../actions';
 import Book from '../components/Book';
 
 const mapStateToProps = (state,ownProps) => {
   return {
-    books: state.books,
+    thisBook: state.onebook,
     bookid: ownProps.match.params.id,
     bookComments: state.bookComments,
   }
@@ -12,7 +12,8 @@ const mapStateToProps = (state,ownProps) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchBookComments: (bookId) => dispatch(fetchBookComments(bookId)),
-  fetchAllBooks: () => dispatch(fetchAllBooks())
+  fetchAllBooks: () => dispatch(fetchAllBooks()),
+  fetchOneBook: (bookId) => dispatch(fetchOneBook(bookId))
 })
 
 export default connect(
