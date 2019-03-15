@@ -5,17 +5,28 @@
 
 import {fireStore} from '../firebase';
 import {firebaseAuth} from '../firebase';
+const bookCollection = fireStore.collection("books");
+
+
+const loginSuccess = (uid) => {
+  return {
+    type: 'LOGIN_ANNONYMOUS',
+    uid: uid
+  }
+}
 
 
 export const loginAsAnnonymous = () => dispatch => {
   firebaseAuth().signInAnonymously().then(result => {
-    console.log(result);
+    dispatch(loginSuccess(result.user.uid));
   })
 }
 
 
 
-const bookCollection = fireStore.collection("books");
+// MARK: Books
+
+
 
 const fetchOneBookSuccess = oneBook => {
   return {
@@ -31,9 +42,31 @@ export const fetchOneBook = bookId => dispatch => {
     dispatch(fetchOneBookSuccess(oneBook));
   })
 }
+const fetchAllBooksSuccess = books => {
+  return {
+    type: 'FETCH_BOOKS',
+    books: books
+  }
+}
 
 
 
+export const fetchAllBooks = () => dispatch => {
+  bookCollection.onSnapshot((snapshot) => {
+    let books=[];//let books = []
+    bookCollection.onSnapshot((snapshot) => {
+      snapshot.docs.forEach((doc) => {
+        let book = doc.data();
+        book["id"] = doc.id;
+        books.push(book);
+      })
+    })
+    dispatch(fetchAllBooksSuccess(books));
+  })
+}
+
+
+// MARK: BookComments
 // MARK: BookComments
 const fetchBookCommentsSuccess = bookComments => {
   return {
@@ -52,43 +85,4 @@ export const fetchBookComments = (bookId) => dispatch => {
     })
   })
   dispatch(fetchBookCommentsSuccess(bookComments));
-}
-
-
-// MARK: AllBooks
-const fetchAllBooksSuccess = books => {
-  return {
-    type: 'FETCH_BOOKS',
-    books: books
-  }
-}
-
-// export const fetchSingleBooks = (bookId) => dispatch => {
-//   bookCollection.onSnapshot((snapshot) => {
-//     let books=[];//let books = []
-//     bookCollection.onSnapshot((snapshot) => {
-//       snapshot.docs.forEach((doc) => {
-//         let book = doc.data();
-//         book["id"] = doc.id;
-//         books.push(book);
-//       })
-//     })
-//     dispatch(fetchAllBooksSuccess(books));
-//   })
-// }
-
-
-
-export const fetchAllBooks = () => dispatch => {
-  bookCollection.onSnapshot((snapshot) => {
-    let books=[];//let books = []
-    bookCollection.onSnapshot((snapshot) => {
-      snapshot.docs.forEach((doc) => {
-        let book = doc.data();
-        book["id"] = doc.id;
-        books.push(book);
-      })
-    })
-    dispatch(fetchAllBooksSuccess(books));
-  })
 }
