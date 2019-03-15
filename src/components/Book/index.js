@@ -3,8 +3,10 @@ import React, { Component } from 'react';
 class Book extends Component {
   componentDidMount(){
     const bookId = this.props.match.params.id;
+    console.log(bookId)
     this.props.fetchAllBooks();
     this.props.fetchBookComments(bookId);
+    this.props.fetchOneBook(bookId)
   }
   componentDidUpdate(prevProps){
     if(this.props.bookComments !== prevProps.bookComments){
@@ -12,16 +14,16 @@ class Book extends Component {
     }
   }
   render() {
-    if(this.props.bookComments[0]){
-      const bookComments = this.props.bookComments
+    if(this.props.thisBook){
       return (
         <div className="App">
-          <button onClick={() => console.log(bookComments[0].content)}>{bookComments[0].content}</button>
+          <p onClick={() => console.log(this.props.thisBook)}>{this.props.thisBook.title}</p>
+          {this.props.bookComments.map( (comment,i) =>
+             <button >{comment.content}</button>
+          )}
         </div>
       );
-    }else{return <button onClick={() => {
-      this.setState({test:true})
-    }}>TEST</button>;}
+    }else{return <button onClick={() => console.log(this.props.thisBook)}>ASAKO</button>;}
 
   }
 }
