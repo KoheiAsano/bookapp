@@ -30,9 +30,10 @@ const style = {
     textTransform: "none",
   },
 }
-const CommentModal = ({CommentModalOpen, onCommentModalClose}) => {
-  let input
-  const handleChange = (e) => {input = e.target.value}
+const CommentModal = ({bookId,commentId,CommentModalOpen, onCommentModalClose, onSave}) => {
+  let input1,input2
+  const handleChange1 = (e) => {input1 = e.target.value}
+  const handleChange2 = (e) => {input2 = e.target.value}
   return(
     <div>
         <Modal open={CommentModalOpen}
@@ -41,25 +42,25 @@ const CommentModal = ({CommentModalOpen, onCommentModalClose}) => {
             <div style={style.selectProjectModalStyle}>
               <h3>コメントする</h3>
               <TextField label={"Page"}
-                         value={input}
+                         value={input1}
                          style={{marginRight: "10px"}} autoFocus
-                         onChange={(e) => handleChange(e)}/>
+                         onChange={(e) => handleChange1(e)}/>
               <div>
                <TextField label={"コメント"}
-                          value={input}
+                          value={input2}
                           style={{marginRight: "10px"}} autoFocus
-                          onChange={(e) => handleChange(e)}/>
+                          onChange={(e) => handleChange2(e)}/>
               </div>
                <Button style={style.btnstyle}
                        variant="outlined"
-                       disabled={input === ""}
-                       value="保存"
+                       value="投稿"
+                       disabled={input1 == "" || input2 == ""}
                        onClick={() => {
+                         onSave(bookId, "asako",input2, commentId || null, input1 )
                          onCommentModalClose();
                        }}>
                投稿
                </Button>
-
             </div>
           </div>
         </Modal>

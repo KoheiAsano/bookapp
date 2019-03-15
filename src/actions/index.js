@@ -72,7 +72,7 @@ export const fetchAllBooks = () => dispatch => {
 // MARK: BookComments
 
 export const addComment = (bookId, who, content, to, page) => dispatch => {
-  bookCollection.doc(bookId).collection("comments").update({
+  bookCollection.doc(bookId).collection("comments").add({
     by: who,
     content: content,
     to: to,

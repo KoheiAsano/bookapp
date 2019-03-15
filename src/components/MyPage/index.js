@@ -5,9 +5,9 @@ const books = ["ゼロから作るDeep_Lerning", "PRML","やさしいJAVA", "ア
 
 
 class MyPage extends Component {
-  // componentDidMount() {
-  //
-  // }
+  toBook = () => {
+    this.props.history.push("/book/FsuMz3M8oUEon0DjzAHH");
+  }
   componentDidUpdate(prevProps) {
     if(this.props.uid !== prevProps.uid){
       this.props.fetchUserFavorites(this.props.uid);
@@ -21,7 +21,7 @@ class MyPage extends Component {
           <hr />
           {books.map((book,i) => {
             return (
-              <BookLink bookName={book}/>
+              <BookLink toBook={this.toBook} bookName={book}/>
             )
           })}
           <div>message = {'ふがふが'}</div>
@@ -45,7 +45,7 @@ class BookLink extends Component {
   render() {
     return (
       <div>
-        <p><button onClick={() => alert('clicked')}> {this.props.bookName} <br/>[著者]<br/><img src={"https://imgur.com/HHNnB5H.png"} alt={"本の画像がここに表示されます"} title={"本"} width="200"/></button></p>
+        <p><button onClick={() => this.props.toBook()}> {this.props.bookName} <br/>[著者]<br/><img src={"https://imgur.com/HHNnB5H.png"} alt={"本の画像がここに表示されます"} title={"本"} width="200"/></button></p>
       </div>
     );
   }

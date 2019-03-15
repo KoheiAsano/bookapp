@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import {fetchUserFavorites} from '../actions';
+import {fetchUserFavorites, fetchAllBooks} from '../actions';
 import MyPage from '../components/MyPage';
 
 
@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUserFavorites: (uid) => dispatch(fetchUserFavorites(uid)),
+  fetchAllBooks: () => dispatch(fetchAllBooks())
 })
 
 export default connect(
