@@ -1,3 +1,8 @@
+
+
+
+
+
 import {fireStore} from '../firebase';
 import {firebaseAuth} from '../firebase';
 
@@ -9,7 +14,24 @@ export const loginAsAnnonymous = () => dispatch => {
 }
 
 
+
 const bookCollection = fireStore.collection("books");
+
+const fetchOneBookSuccess = oneBook => {
+  return {
+    type: 'FETCH_ONE_BOOK',
+    oneBook: oneBook
+  }
+}
+
+export const fetchOneBook = bookId => dispatch => {
+  bookCollection.doc(bookId).get().then(bookDoc=>{
+    let oneBook = bookDoc.data();
+    oneBook["id"] = bookDoc.id;
+    dispatch(fetchOneBookSuccess(oneBook));
+  })
+}
+
 
 
 // MARK: BookComments
