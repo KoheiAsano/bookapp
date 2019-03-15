@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {BrowserRouter, Route} from 'react-router-dom';
 import Header from "./containers/Header";
-import MyPage from "./components/MyPage";
+import MyPage from "./containers/MyPage";
 import All from "./containers/All";
 import Book from "./containers/Book";
 import Comment from "./components/Comment";
@@ -22,7 +22,7 @@ class Routes extends Component {
           </div>
         </BrowserRouter>
       </Provider>
-  )
+    )
   }
 }
 

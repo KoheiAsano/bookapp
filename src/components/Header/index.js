@@ -30,7 +30,7 @@ const disablestyle = {
 const responsiveHeader = (history,match) => {
   return (
     <div>
-      <button style={match.params.cPath === "home" ? disablestyle:btnstyle} disable={match.params.cPath === "home"} onClick={() => {console.log(match.params.cPath);history.push(`/home`)}}>Home</button>
+      <button style={match.params.cPath === "home" ? disablestyle:btnstyle} disable={match.params.cPath === "home"} onClick={() => {history.push(`/home`)}}>Home</button>
       <button style={match.params.cPath === "all" ? disablestyle:btnstyle} disable={match.params.cPath === "all"} onClick={() => history.push(`/all`)}>AllBooks</button>
     </div>
   )

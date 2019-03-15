@@ -4,7 +4,8 @@ import All from '../components/All';
 
 
 const mapStateToProps = state => ({
-  books: state.books
+  books: state.books,
+  uid: state.auth
 })
 
 const mapDispatchToProps = dispatch => ({
