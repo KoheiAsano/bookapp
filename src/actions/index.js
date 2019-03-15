@@ -1,11 +1,6 @@
-
-
-
-
-
 import {fireStore} from '../firebase';
 import {firebaseAuth} from '../firebase';
-const bookCollection = fireStore.collection("books");
+
 
 
 const loginSuccess = (uid) => {
@@ -24,9 +19,11 @@ export const loginAsAnnonymous = () => dispatch => {
 
 
 
+
+
 // MARK: Books
 
-
+const bookCollection = fireStore.collection("books");
 
 const fetchOneBookSuccess = oneBook => {
   return {
@@ -42,6 +39,8 @@ export const fetchOneBook = bookId => dispatch => {
     dispatch(fetchOneBookSuccess(oneBook));
   })
 }
+
+
 const fetchAllBooksSuccess = books => {
   return {
     type: 'FETCH_BOOKS',
@@ -66,15 +65,28 @@ export const fetchAllBooks = () => dispatch => {
 }
 
 
+
+// MARK:
+
+
 // MARK: BookComments
-// MARK: BookComments
+
+export const addComment = (bookId, who, content, to, page) => dispatch => {
+  bookCollection.doc(bookId).collection("comments").update({
+    by: who,
+    content: content,
+    to: to,
+    page: page
+  })
+}
+
+
 const fetchBookCommentsSuccess = bookComments => {
   return {
     type: 'FETCH_BOOK_COMMENTS',
     bookComments: bookComments
   }
 }
-
 export const fetchBookComments = (bookId) => dispatch => {
   let bookComments=[];
   bookCollection.doc(bookId).collection("comments").onSnapshot((snapshot) => {
@@ -85,4 +97,30 @@ export const fetchBookComments = (bookId) => dispatch => {
     })
   })
   dispatch(fetchBookCommentsSuccess(bookComments));
+}
+
+
+
+// MARK: user
+const userCollection = fireStore.collection("users");
+
+
+
+const fetchUserFavoritesSuccess = userFavorites => {
+  return {
+    type: 'FETCH_USER_FAVORITE_BOOK',
+    userFavorites: userFavorites
+  }
+}
+
+export const fetchUserFavorites = (uid) => dispatch => {
+  let favorites=[];
+  userCollection.doc(uid).collection("favorites").onSnapshot((snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      let favorite = doc.data();
+      favorite["id"] = doc.id();
+      favorites.push(favorite);
+    })
+  })
+  dispatch(fetchUserFavoritesSuccess(favorites));
 }
