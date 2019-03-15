@@ -7,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import {firebaseAuth} from '../../firebase';
 
 class All extends React.Component {
   constructor(props){
@@ -18,7 +19,6 @@ class All extends React.Component {
   componentDidMount(){
     this.props.fetchAllBooks();
   }
-
   render() {
     const books = this.props.books || [{page_amount:1243, title:"TEST"}, {page_amount:1243, title:"TEST"}];
       return (
@@ -48,7 +48,7 @@ class All extends React.Component {
                   <Button size="small" color="primary">
                     Share
                   </Button>
-                  <Button size="small" color="primary">
+                  <Button size="small" color={"secondary"}>
                     <FavoriteIcon />
                   </Button>
                 </CardActions>
@@ -57,6 +57,9 @@ class All extends React.Component {
           })}
           <button onClick={() => {
             this.setState({test:true});
+          }}>{"Open"}</button>
+          <button onClick={() => {
+            console.log(firebaseAuth().currentUser);
           }}>{"Open"}</button>
         </div>
       )

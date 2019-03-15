@@ -7,6 +7,7 @@ const mapStateToProps = (state,ownProps) => {
     thisBook: state.onebook,
     bookid: ownProps.match.params.id,
     bookComments: state.bookComments,
+    uid: state.auth
   }
 }
 

@@ -5,6 +5,14 @@ const books = ["ゼロから作るDeep_Lerning", "PRML","やさしいJAVA", "ア
 
 
 class MyPage extends Component {
+  // componentDidMount() {
+  //
+  // }
+  componentDidUpdate(prevProps) {
+    if(this.props.uid !== prevProps.uid){
+      this.props.fetchUserFavorites(this.props.uid);
+    }
+  }
   render() {
     return (
       <div>
@@ -13,11 +21,11 @@ class MyPage extends Component {
           <hr />
           {books.map((book,i) => {
             return (
-              //<p><button onClick={() => console.log("Clicked" + book)}> {book} </button></p>
               <BookLink bookName={book}/>
             )
           })}
           <div>message = {'ふがふが'}</div>
+          <button onClick={() => console.log(this.props)}>ASAKO</button>
         </center>
       </div>
     );
